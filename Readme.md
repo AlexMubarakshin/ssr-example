@@ -1,4 +1,4 @@
-# Server Sidee Rendering Example
+# Server Side Rendering Example
 
 This is a very simple example of Server Side Rendering.
 
