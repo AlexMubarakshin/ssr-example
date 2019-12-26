@@ -1,14 +1,12 @@
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import { SheetsRegistry, JssProvider } from 'react-jss';
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  createGenerateClassName,
-} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
+
+import theme from '../src/theme';
 
 import App from '../src/App';
 import template from './template';
@@ -16,24 +14,20 @@ import template from './template';
 export default function render(url) {
   const reactRouterContext = {};
 
-  const sheetsRegistry = new SheetsRegistry();
-  const sheetsManager = new Map();
+  const sheets = new ServerStyleSheets();
 
-  const theme = createMuiTheme({});
-
-  const generateClassName = createGenerateClassName();
-
-  const content = renderToString(
-    <StaticRouter location={url} context={reactRouterContext}>
-      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+  const content = ReactDOMServer.renderToString(
+    sheets.collect(
+      <StaticRouter location={url} context={reactRouterContext}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <App />
-        </MuiThemeProvider>
-      </JssProvider>
-    </StaticRouter>
+        </ThemeProvider>
+      </StaticRouter>
+    )
   );
 
   const helmet = Helmet.renderStatic();
 
-  return template(helmet, content, sheetsRegistry);
+  return template(helmet, content, sheets.toString());
 }

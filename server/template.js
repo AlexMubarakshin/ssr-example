@@ -1,7 +1,4 @@
-export default function template(helmet, content = '', sheetsRegistry) {
-
-  const css = sheetsRegistry.toString();
-  console.log(css);
+export default function template(helmet, content = '', css) {
   const scripts = '<script src="/client.js"></script>';
 
   const page = `<!DOCTYPE html>
@@ -12,10 +9,10 @@ export default function template(helmet, content = '', sheetsRegistry) {
                 ${helmet.link.toString()}
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <meta name="theme-color" content="#810051">
+                <meta name="theme-color" content="#556cd6">
                 <link rel="shortcut icon" href="/assets/logos/favicon.ico" type="image/x-icon">
                 <link rel="icon" href="/assets/logos/favicon.ico" type="image/x-icon">
-                <link rel="stylesheet" href="/assets/global.css">
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
               </head>
               <body>
                 <div class="content">
