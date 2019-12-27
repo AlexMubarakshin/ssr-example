@@ -1,13 +1,13 @@
 import express from 'express';
 import path from 'path';
-import ssr from './server';
+import ssr from './ssr';
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 app.use(express.static('public'));
-app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
+app.use('/assets', express.static(path.resolve(__dirname, '../assets')));
 
 app.get('*', (req, res) => {
   const response = ssr(req.url);

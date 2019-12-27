@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
 
-import theme from '../src/theme';
+import theme from '../theme';
 
-import App from '../src/App';
+import App from '../App';
 import template from './template';
 
 export default function render(url) {
