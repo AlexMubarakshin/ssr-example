@@ -39,7 +39,8 @@ module.exports = {
             'error',
             'always'
         ],
-        'react/prop-types': 'off'
+        'react/prop-types': 'off',
+        'no-useless-catch': 'off'
     },
     "settings": {
         "react": {

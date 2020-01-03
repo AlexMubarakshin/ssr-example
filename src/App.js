@@ -1,11 +1,20 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import Home from './pages/Home';
+
+import NoMatch from './pages/NoMatch';
+
+import routes from './routes';
 
 export default function App() {
-  return(
+  return (
     <Switch>
-      <Route exact path="/" component={Home}/>
+      {
+        routes.map(route => (
+          <Route {...route} key={route.path} />
+        ))
+      }
+
+      <Route render={(props) => <NoMatch {...props} />} />
     </Switch>
   );
 }

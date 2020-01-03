@@ -1,5 +1,20 @@
-export default function template(helmet, content = '', css) {
-  const scripts = '<script src="/client.js"></script>';
+/**
+ * Insert data in template
+ *
+ * @export
+ * @param {Object} helmet Helmet rendered static 
+ * @param {string} [content=''] JSS string
+ * @param {*} store Redux store
+ * @param {string} css CSS string
+ * @return {string} HTML template
+ */
+export default function template(helmet, content = '', store, css) {
+  const state = store.getState();
+
+  const scripts = `<script>
+                    window.__STATE__ = ${JSON.stringify(state)}
+                  </script>
+                  <script src="/client.js"></script>`;
 
   const page = `<!DOCTYPE html>
               <html lang="en">
