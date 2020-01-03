@@ -60,4 +60,8 @@ const Home = ({ classes }) => {
   );
 };
 
+Home.initialFetchData = ({ dispatch }) => ([
+  dispatch(beersActions.fetchBeers()),
+]);
+
 export default withStyles(styles)(Home);

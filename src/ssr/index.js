@@ -11,7 +11,6 @@ import theme from '../theme';
 
 import App from '../App';
 import template from './template';
-import { createStore } from '../store';
 
 /**
  * Render SSR content
@@ -20,12 +19,10 @@ import { createStore } from '../store';
  * @param {string} url
  * @return {string} HTML page
  */
-export default function render(url) {
+export default function render(url, store) {
   const reactRouterContext = {};
 
   const sheets = new ServerStyleSheets();
-
-  const store = createStore();
 
   const content = ReactDOMServer.renderToString(
     sheets.collect(
