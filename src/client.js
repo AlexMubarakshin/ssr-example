@@ -12,6 +12,7 @@ import theme from './theme';
 import { createStore } from './store';
 
 const store = createStore(window.__STATE__);
+delete window.__STATE__;
 
 hydrate(
   <Provider store={store}>

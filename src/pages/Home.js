@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import InfiniteScroll from 'react-infinite-scroller';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -23,11 +25,13 @@ const styles = {
 const Home = ({ classes }) => {
   const dispatch = useDispatch();
 
-  const { beers } = useSelector(state => state.beers);
+  const { beers, page, hasMore, isLoading } = useSelector(state => state.beers);
 
-  React.useEffect(() => {
-    dispatch(beersActions.fetchBeers());
-  }, []);
+  const loadMoreBeers = () => {
+    if (isLoading) return;
+
+    dispatch(beersActions.fetchBeers(page + 1));
+  };
 
   return (
     <div>
@@ -36,25 +40,30 @@ const Home = ({ classes }) => {
         <meta name="description" content="Brewdog's beer explorer" />
       </Helmet>
       <Container>
-        <Grid
-          container
-          alignItems="center"
-          justify="center"
-          spacing={8}
+        <Typography className={classes.title} variant="h1">{'Brewdog\'s beer explorer'}</Typography>
+        <InfiniteScroll
+          initialLoad={false}
+          loadMore={loadMoreBeers}
+          hasMore={hasMore}
+          threshold={900}
         >
-          <Grid item xs={12}>
-            <Typography className={classes.title} variant="h1">{'Brewdog\'s beer explorer'}</Typography>
+          <Grid
+            container
+            alignItems="center"
+            justify="center"
+            spacing={8}
+          >
+            {
+              beers.map((beer) => (
+                <Grid item xs={12} sm={6} md={4} key={beer.id}>
+                  <BeerCard beer={beer} />
+                </Grid>
+              ))
+            }
+
           </Grid>
+        </InfiniteScroll>
 
-          {
-            beers.map((beer) => (
-              <Grid item xs={12} sm={6} md={4} key={beer.id}>
-                <BeerCard beer={beer} />
-              </Grid>
-            ))
-          }
-
-        </Grid>
       </Container>
     </div>
   );

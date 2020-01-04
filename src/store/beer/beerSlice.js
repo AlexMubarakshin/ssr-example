@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import * as Api from '../../api';
 
+const BEER_PER_PAGE = 15;
+
 const initialState = {
   beers: [],
+  page: 1,
+  hasMore: true,
   isLoading: false,
 };
 
@@ -22,10 +26,12 @@ const beers = createSlice({
   reducers: {
     getBeersStart: startLoading,
     getBeersFailure: loadingFailed,
-    getBeersSuccess(state, { payload }) {
-      state.beers = payload;
+    getBeersSuccess(state, { payload: { beers, page }, }) {
+      state.beers = [...state.beers, ...beers];
       state.isLoading = false;
       state.error = null;
+      state.page = page;
+      state.hasMore = beers.length >= BEER_PER_PAGE;
     },
 
   }
@@ -37,11 +43,11 @@ export const {
   getBeersSuccess,
 } = beers.actions;
 
-export const fetchBeers = () => async (dispatch) => {
+export const fetchBeers = (page = 1) => async (dispatch) => {
   try {
     dispatch(getBeersStart());
-    const beers = await Api.getBeers();
-    dispatch(getBeersSuccess(beers));
+    const beers = await Api.getBeers(page);
+    dispatch(getBeersSuccess({ beers, page }));
   } catch (err) {
     dispatch(getBeersFailure(err.toString()));
   }
