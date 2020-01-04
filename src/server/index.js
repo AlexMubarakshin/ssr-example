@@ -1,11 +1,11 @@
 import express from 'express';
 import path from 'path';
-import ssr from './ssr';
+import ssr from './render';
 
 import { matchRoutes } from 'react-router-config';
-import Routes from './router/routes';
+import Routes from '../router/routes';
 
-import { createStore } from './store';
+import { createStore } from '../store';
 
 const PORT = process.env.PORT || 3000;
 

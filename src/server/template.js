@@ -14,7 +14,7 @@ export default function template(helmet, content = '', store, css) {
   const scripts = `<script>
                     window.__STATE__ = ${JSON.stringify(state)}
                   </script>
-                  <script src="/client.js"></script>`;
+                  <script src="/client.js" defer></script>`;
 
   const page = `<!DOCTYPE html>
               <html lang="en">
