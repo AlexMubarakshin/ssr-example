@@ -10,12 +10,13 @@ import { createStore } from '../store';
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-const store = createStore();
 
 app.use(express.static('public'));
 app.use('/assets', express.static(path.resolve(__dirname, '../assets')));
 
 app.get('*', async (req, res) => {
+  const store = createStore();
+
   const actions = matchRoutes(Routes, req.path)
     .map(({ route }) => route.component.initialFetchData ? route.component.initialFetchData({ ...store, path: req.path }) : null)
     .map(async actions => await Promise.all(
