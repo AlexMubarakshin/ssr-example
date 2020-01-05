@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrate } from 'react-dom';
+import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -11,10 +11,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import { createStore } from './store';
 
-const store = createStore(window.__STATE__);
-delete window.__STATE__;
+const store = createStore();
 
-hydrate(
+ReactDom.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <CssBaseline />

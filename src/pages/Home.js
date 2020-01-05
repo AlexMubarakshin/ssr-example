@@ -25,6 +25,10 @@ const styles = {
 const Home = ({ classes }) => {
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    dispatch(beersActions.fetchBeers(page));
+  }, []);
+
   const { beers, page, hasMore, isLoading } = useSelector(state => state.beers);
 
   const loadMoreBeers = () => {
